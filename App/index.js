@@ -2,7 +2,7 @@
 // Combined code from all files
 
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, Button, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, Button, View, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
@@ -34,40 +34,42 @@ export default function App() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Fairy Tale Generator</Text>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                <Text style={styles.title}>Fairy Tale Generator</Text>
 
-            <Picker
-                selectedValue={protagonist}
-                onValueChange={(itemValue, itemIndex) => setProtagonist(itemValue)}
-                style={styles.picker}
-            >
-                <Picker.Item label="Choose a protagonist" value="" />
-                <Picker.Item label="Prince" value="Prince" />
-                <Picker.Item label="Princess" value="Princess" />
-                <Picker.Item label="Dragon" value="Dragon" />
-                <Picker.Item label="Wizard" value="Wizard" />
-            </Picker>
+                <Picker
+                    selectedValue={protagonist}
+                    onValueChange={(itemValue, itemIndex) => setProtagonist(itemValue)}
+                    style={styles.picker}
+                >
+                    <Picker.Item label="Choose a protagonist" value="" />
+                    <Picker.Item label="Prince" value="Prince" />
+                    <Picker.Item label="Princess" value="Princess" />
+                    <Picker.Item label="Dragon" value="Dragon" />
+                    <Picker.Item label="Wizard" value="Wizard" />
+                </Picker>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Enter the main idea of the tale"
-                value={mainIdea}
-                onChangeText={setMainIdea}
-            />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter the main idea of the tale"
+                    value={mainIdea}
+                    onChangeText={setMainIdea}
+                />
 
-            <Button
-                title="Generate Tale"
-                onPress={generateTale}
-                disabled={protagonist === '' || mainIdea === ''}
-            />
+                <Button
+                    title="Generate Tale"
+                    onPress={generateTale}
+                    disabled={protagonist === '' || mainIdea === ''}
+                />
 
-            {loading && <Text style={styles.loading}>Generating your tale...</Text>}
+                {loading && <Text style={styles.loading}>Generating your tale...</Text>}
 
-            {tale && (
-                <View style={styles.taleContainer}>
-                    <Text style={styles.tale}>{tale}</Text>
-                </View>
-            )}
+                {tale && (
+                    <View style={styles.taleContainer}>
+                        <Text style={styles.tale}>{tale}</Text>
+                    </View>
+                )}
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -77,6 +79,9 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 50,
         paddingHorizontal: 20,
+    },
+    scrollViewContent: {
+        paddingBottom: 20,
     },
     title: {
         fontSize: 24,
